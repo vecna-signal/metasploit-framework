@@ -1,0 +1,38 @@
+Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
+Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
+Overriding user environment variable 'OPENSSL_CONF' to enable legacy functions.
+[4mmsf6[0m [0m> loadpath test/modules
+Loaded 43 modules:
+    14 auxiliary modules
+    13 exploit modules
+    16 post modules
+[4mmsf6[0m [0m> features set postgresql_session_type true
+postgresql_session_type => true
+[!] Run the save command and restart the console for this feature to take effect.
+[4mmsf6[0m [0m> use auxiliary/scanner/postgres/postgres_login
+[*] New in Metasploit 6.4 - The CreateSession option within this module can open an interactive session
+[4mmsf6[0m auxiliary([1m[31mscanner/postgres/postgres_login[0m) [0m> irb -e '(self.respond_to?(:framework) ? framework : self).datastore.user_defined.clear'
+[4mmsf6[0m auxiliary([1m[31mscanner/postgres/postgres_login[0m) [0m> run PASS_FILE= USER_FILE= CreateSession=true username=postgres password=password rhost=127.0.0.1 rport=5432
+[!] No active DB -- Credential data will not be saved!
+[+] 127.0.0.1:5432 - Login Successful: postgres:password@template1
+[*] PostgreSQL session 1 opened (127.0.0.1:38195 -> 127.0.0.1:5432) at 2024-08-01 08:42:47 +0000
+use post/test/postgres
+[-] 127.0.0.1:5432 - LOGIN FAILED: admin:admin@template1 (Incorrect: Invalid username or password)
+[-] 127.0.0.1:5432 - LOGIN FAILED: admin:password@template1 (Incorrect: Invalid username or password)
+[*] Scanned 1 of 1 hosts (100% complete)
+[*] Bruteforce completed, 1 credential was successful.
+[*] 1 Postgres session was opened successfully.
+[*] Auxiliary module execution completed
+[4mmsf6[0m auxiliary([1m[31mscanner/postgres/postgres_login[0m) [0m> run session=1 Verbose=true
+[4mmsf6[0m post([1m[31mtest/postgres[0m) [0m> [*] Running against session 1
+[*] Session type is postgresql and platform is Linux
+[+] should return a version
+[+] should support the help command
+[*] Testing complete in 0.02 seconds
+[*] Passed: 2; Failed: 0; Skipped: 0
+[*] Post module execution completed
+sessions -K
+[4mmsf6[0m post([1m[31mtest/postgres[0m) [0m> jobs -K
+[*] Killing all sessions...
+[*] 127.0.0.1 - PostgreSQL session 1 closed.
+[4mmsf6[0m post([1m[31mtest/postgres[0m) [0m> 
